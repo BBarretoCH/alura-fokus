@@ -1,17 +1,46 @@
 const html = document.querySelector('html');
 
-const focoBt = document.querySelector('.app__card-button--foco')
-const curtoBt = document.querySelector('.app__card-button--curto')
-const longoBt = document.querySelector('.app__card-button--longo')
+const banner = document.querySelector('.app__image');
+const titulo = document.querySelector('.app__title');
+const mensagemNegrito = document.querySelector('app__title-strong');
 
-focoBt.addEventListener('click', () => {
-    html.setAttribute('data-contexto', 'foco');
+const opcoes = document.querySelectorAll('[data-options]');
+
+const phrases = {
+    foco: `
+    Otimize sua produtividade,<br>
+    <strong class="app__title-strong">mergulhe no que importa.</strong>
+    `,
+    descansoCurto: `
+   Que tal dar uma respirada?<br>
+   <strong class="app__title-strong">Faça uma pausa curta!</strong>
+   `,
+    descansoLongo: `
+   Hora de voltar à superfície.<br>
+   <strong class="app__title-strong">Faça uma pausa longa.</strong>
+   `
+}
+
+opcoes.forEach((e) =>{
+        e.addEventListener('click', () => alterarContexto(e.innerHTML.toLocaleLowerCase().replace(/\s/g,'-')))
 })
 
-curtoBt.addEventListener('click', () => {
-    html.setAttribute('data-contexto', 'descanso-curto');
-})
+function alterarContexto(contexto) {
+    html.setAttribute('data-contexto', contexto);
+    banner.setAttribute('src', `./imagens/${contexto}.png`);
+    switch (contexto) {
+        case 'foco':
+            titulo.innerHTML = phrases.foco
+            break;
 
-longoBt.addEventListener('click', () => {
-    html.setAttribute('data-contexto', 'descanso-longo');
-})
+            case 'descanso-curto':
+            titulo.innerHTML = phrases.descansoCurto
+            break;
+
+            case 'descanso-longo':
+                titulo.innerHTML = phrases.descansoLongo
+                break;
+        default:
+            break;
+    }
+}
