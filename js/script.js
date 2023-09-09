@@ -4,6 +4,8 @@ const banner = document.querySelector('.app__image');
 const titulo = document.querySelector('.app__title');
 const mensagemNegrito = document.querySelector('app__title-strong');
 const musicaFocoInput = document.querySelector('#alternar-musica');
+const volume = document.querySelector('#volume');
+console.log(volume)
 
 const opcoes = document.querySelectorAll('[data-options]');
 
@@ -28,9 +30,16 @@ const phrases = {
 musicaFocoInput.addEventListener('change', () => {
     if(musica.paused){
         musica.play();
+        musica.volume = volume.value;
     } else {
         musica.pause();
     }
+})
+
+musica.volume = volume.value;
+volume.addEventListener('input', ()=> {
+    musica.volume = volume.value;
+    console.log(musica.volume);
 })
 
 opcoes.forEach((e) => {
