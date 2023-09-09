@@ -3,8 +3,12 @@ const html = document.querySelector('html');
 const banner = document.querySelector('.app__image');
 const titulo = document.querySelector('.app__title');
 const mensagemNegrito = document.querySelector('app__title-strong');
+const musicaFocoInput = document.querySelector('#alternar-musica');
 
 const opcoes = document.querySelectorAll('[data-options]');
+
+const musica = new Audio('./sons/luna-rise-part-one.mp3');
+musica.loop = true;
 
 const phrases = {
     foco: `
@@ -21,11 +25,26 @@ const phrases = {
    `
 }
 
-opcoes.forEach((e) =>{
-        e.addEventListener('click', () => alterarContexto(e.innerHTML.toLocaleLowerCase().replace(/\s/g,'-')))
+musicaFocoInput.addEventListener('change', () => {
+    if(musica.paused){
+        musica.play();
+    } else {
+        musica.pause();
+    }
+})
+
+opcoes.forEach((e) => {
+    e.addEventListener('click', () => {
+        alterarContexto(e.innerHTML.toLocaleLowerCase().replace(/\s/g, '-'));
+        e.classList.add('active');
+    });
+
 })
 
 function alterarContexto(contexto) {
+    opcoes.forEach(function(opcao){
+        opcao.classList.remove('active');
+    });    
     html.setAttribute('data-contexto', contexto);
     banner.setAttribute('src', `./imagens/${contexto}.png`);
     switch (contexto) {
@@ -44,3 +63,4 @@ function alterarContexto(contexto) {
             break;
     }
 }
+
