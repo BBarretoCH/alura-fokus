@@ -8,9 +8,6 @@ const startPausebt = document.querySelector('#start-pause');
 const iniciarOuPausarBt = document.querySelector('#start-pause span');
 const imagemPlayOuPause = document.querySelector('.app__card-primary-butto-icon');
 const tempoNaTela = document.querySelector('#timer');
-const iniciarOuPausarBt = document.querySelector('#start-pause span');
-const imagemPlayOuPause = document.querySelector('.app__card-primary-butto-icon');
-const tempoNaTela = document.querySelector('#timer');
 
 const opcoes = document.querySelectorAll('[data-options]');
 
