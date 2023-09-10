@@ -1,16 +1,22 @@
 const html = document.querySelector('html');
-
 const banner = document.querySelector('.app__image');
 const titulo = document.querySelector('.app__title');
 const mensagemNegrito = document.querySelector('app__title-strong');
 const musicaFocoInput = document.querySelector('#alternar-musica');
 const volume = document.querySelector('#volume');
-console.log(volume)
+const startPausebt = document.querySelector('#start-pause');
 
 const opcoes = document.querySelectorAll('[data-options]');
 
+let tempoDecorridoEmSegundos = 5;
+let intervaloId = null;
+
 const musica = new Audio('./sons/luna-rise-part-one.mp3');
 musica.loop = true;
+
+const somIniciar = new Audio('./sons/play.wav');
+const somPausar = new Audio(('./sons/pause.mp3'));
+const somTempoEsgotado = new Audio('./sons/beep.mp3');
 
 const phrases = {
     foco: `
@@ -47,7 +53,6 @@ opcoes.forEach((e) => {
         alterarContexto(e.innerHTML.toLocaleLowerCase().replace(/\s/g, '-'));
         e.classList.add('active');
     });
-
 })
 
 function alterarContexto(contexto) {
@@ -73,3 +78,30 @@ function alterarContexto(contexto) {
     }
 }
 
+const contagemRegressiva = () => {
+    if(tempoDecorridoEmSegundos <= 0) {
+        zerar();
+        somTempoEsgotado.play();
+        alert('tempo finalizado');
+        return
+    }
+    tempoDecorridoEmSegundos -= 1;
+    console.log(`Temporizador: ${tempoDecorridoEmSegundos}`)
+}
+
+startPausebt.addEventListener('click', iniciarOuPausar);
+
+function iniciarOuPausar() {
+    if(intervaloId){
+        somPausar.play()
+        zerar();
+        return
+    }
+    somIniciar.play();
+    intervaloId = setInterval(contagemRegressiva, 1000);
+}
+
+function zerar() {
+    clearInterval(intervaloId);
+    intervaloId = null;
+}
