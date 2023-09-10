@@ -8,11 +8,13 @@ const startPausebt = document.querySelector('#start-pause');
 const iniciarOuPausarBt = document.querySelector('#start-pause span');
 const imagemPlayOuPause = document.querySelector('.app__card-primary-butto-icon');
 const tempoNaTela = document.querySelector('#timer');
+const iniciarOuPausarBt = document.querySelector('#start-pause span');
+const imagemPlayOuPause = document.querySelector('.app__card-primary-butto-icon');
+const tempoNaTela = document.querySelector('#timer');
 
 const opcoes = document.querySelectorAll('[data-options]');
 
 let tempoDecorridoEmSegundos = 1500;
-
 let intervaloId = null;
 
 const musica = new Audio('./sons/luna-rise-part-one.mp3');
@@ -70,14 +72,24 @@ function alterarContexto(contexto) {
             titulo.innerHTML = phrases.foco
             tempoDecorridoEmSegundos = 1500;
             mostrarTempo();
+            tempoDecorridoEmSegundos = 1500;
+            mostrarTempo();
             break;
 
+        case 'descanso-curto':
         case 'descanso-curto':
             titulo.innerHTML = phrases.descansoCurto
             tempoDecorridoEmSegundos = 300;
             mostrarTempo();
+            tempoDecorridoEmSegundos = 300;
+            mostrarTempo();
             break;
 
+        case 'descanso-longo':
+            titulo.innerHTML = phrases.descansoLongo
+            tempoDecorridoEmSegundos = 900;
+            mostrarTempo();
+            break;
         case 'descanso-longo':
             titulo.innerHTML = phrases.descansoLongo
             tempoDecorridoEmSegundos = 900;
@@ -93,18 +105,18 @@ const contagemRegressiva = () => {
         somTempoEsgotado.play();
         alert('tempo finalizado');
         zerar();
+        zerar();
         return
     }
     tempoDecorridoEmSegundos -= 1;
     mostrarTempo();
-
-
 }
 
 startPausebt.addEventListener('click', iniciarOuPausar);
 
 function iniciarOuPausar() {
     if(intervaloId){
+        somPausar.play();
         somPausar.play();
         zerar();
         return
@@ -113,11 +125,12 @@ function iniciarOuPausar() {
     intervaloId = setInterval(contagemRegressiva, 1000);
     imagemPlayOuPause.src = "./imagens/pause.png"; 
     iniciarOuPausarBt.textContent = "Pausar";
-
 }
 
 function zerar() {
     clearInterval(intervaloId);
+    imagemPlayOuPause.src = "./imagens/play_arrow.png";
+    iniciarOuPausarBt.textContent = "Começar";
     imagemPlayOuPause.src = "./imagens/play_arrow.png";
     iniciarOuPausarBt.textContent = "Começar";
     intervaloId = null;
@@ -131,3 +144,11 @@ function mostrarTempo(){
 
 mostrarTempo();
 
+
+function mostrarTempo(){
+    const tempo = new Date(tempoDecorridoEmSegundos * 1000);
+    const tempoFormatado = tempo.toLocaleTimeString('pt-Br', {minute: '2-digit', second: '2-digit'});
+    tempoNaTela.innerHTML = `${tempoFormatado}`;
+}
+
+mostrarTempo();
