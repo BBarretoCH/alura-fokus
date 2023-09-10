@@ -12,6 +12,7 @@ const tempoNaTela = document.querySelector('#timer');
 const opcoes = document.querySelectorAll('[data-options]');
 
 let tempoDecorridoEmSegundos = 1500;
+
 let intervaloId = null;
 
 const musica = new Audio('./sons/luna-rise-part-one.mp3');
@@ -96,6 +97,8 @@ const contagemRegressiva = () => {
     }
     tempoDecorridoEmSegundos -= 1;
     mostrarTempo();
+
+
 }
 
 startPausebt.addEventListener('click', iniciarOuPausar);
@@ -110,6 +113,7 @@ function iniciarOuPausar() {
     intervaloId = setInterval(contagemRegressiva, 1000);
     imagemPlayOuPause.src = "./imagens/pause.png"; 
     iniciarOuPausarBt.textContent = "Pausar";
+
 }
 
 function zerar() {
@@ -126,3 +130,4 @@ function mostrarTempo(){
 }
 
 mostrarTempo();
+
